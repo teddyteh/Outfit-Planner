@@ -1,1 +1,7 @@
-<app-clothes></app-clothes>
+<div class="d-flex justify-content-center">
+    <div style="margin: 25px">
+        <app-clothes [(showImageEditor)]="showImageEditor"></app-clothes>
+    </div>
+
+    <app-image-editor (imageUploaded)="imageUploaded($event)" *ngIf="showImageEditor"></app-image-editor>
+</div>

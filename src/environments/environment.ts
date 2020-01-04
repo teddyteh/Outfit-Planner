@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyAEM5TJVzxHmB9g-uK9mLgWhDMS7udQXjo",
+    authDomain: "outfit-planner-b9995.firebaseapp.com",
+    databaseURL: "https://outfit-planner-b9995.firebaseio.com",
+    projectId: "outfit-planner-b9995",
+    storageBucket: "outfit-planner-b9995.appspot.com",
+    messagingSenderId: "16260172009",
+    appId: "1:16260172009:web:0a562b3fcc58d79c97c878",
+    measurementId: "G-SX8ECTBXQX"
+  }
 };
 
 /*

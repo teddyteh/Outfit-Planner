@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ClothingService } from '../clothing.service';
 import { Clothing } from '../models/clothing';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-clothes',
@@ -9,28 +10,27 @@ import { Clothing } from '../models/clothing';
 })
 export class ClothesComponent implements OnInit {
 
-  clothes: Clothing[];
   selectedClothing: Clothing;
-  showImageEditor = false;
+  @Input() showImageEditor = false;
+  @Output() showImageEditorChange = new EventEmitter<boolean>();
 
-  constructor(private clothingService: ClothingService) { }
-
-  ngOnInit() {
-    this.getHeroes();
+  constructor(private clothingService: ClothingService) {
   }
 
-  getHeroes(): void {
-    this.clothingService.getClothes()
-      .subscribe(clothes => this.clothes = clothes);
+  ngOnInit() {
   }
 
   selectClothing(clothing: Clothing): void {
     this.selectedClothing = clothing;
   }
 
+  editImage() {
+    this.showImageEditorChange.emit(true);
+  }
+
   imageUploaded(imgurLink) {
     this.selectedClothing.photo = imgurLink;
-    this.showImageEditor = false;
+    this.showImageEditorChange.emit(false);
   }
 
   addClothing() {

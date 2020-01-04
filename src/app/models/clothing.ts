@@ -4,4 +4,5 @@ export class Clothing {
   photo?: string;
   brand?: string;
   tags?: string[];
+  user?: string;
 }
