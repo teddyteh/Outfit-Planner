@@ -13,15 +13,15 @@ export class ClothingService {
   // clothes: Clothing[];
   private clothesCollection: AngularFirestoreCollection<Clothing>;
   clothes: Observable<Clothing[]> = of([]);
+  selectedClothing: Clothing;
 
   constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth) {
-    let that = this;
     this.afAuth.authState.subscribe(authState => {
-      if (authState.uid) {
+      if (authState && authState.uid) {
         console.log("uid " + authState.uid);
-        that.clothesCollection = afs.collection<Clothing>('clothes', ref => ref.where('user', '==', authState.uid));
-        that.clothes = this.clothesCollection.valueChanges();
-        that.clothes.subscribe(c => console.log(c));
+        this.clothesCollection = afs.collection<Clothing>('clothes', ref => ref.where('user', '==', authState.uid));
+        this.clothes = this.clothesCollection.valueChanges({ idField: 'id' });
+        this.clothes.subscribe(c => console.log(c));
       }
     });
   }
@@ -31,7 +31,19 @@ export class ClothingService {
 
     console.log(clothing);
 
-    this.clothesCollection.add({ ...clothing });
+    this.clothesCollection.add({ ...clothing }).then(done => this.selectedClothing = null);
+  }
+
+  deleteClothing() {
+    return this.afs.doc<Clothing>('clothes/' + this.selectedClothing.id).delete().then(done => this.selectedClothing = null);
+  }
+
+  selectClothing(clothing: Clothing) {
+    this.selectedClothing = clothing;
+  }
+
+  cancelAddClothing() {
+    this.selectedClothing = null;
   }
 
 }

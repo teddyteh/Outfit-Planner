@@ -10,7 +10,7 @@ import { Observable, of } from 'rxjs';
 })
 export class ClothesComponent implements OnInit {
 
-  selectedClothing: Clothing;
+  selectedClothing: any;
   @Input() showImageEditor = false;
   @Output() showImageEditorChange = new EventEmitter<boolean>();
 
@@ -20,8 +20,8 @@ export class ClothesComponent implements OnInit {
   ngOnInit() {
   }
 
-  selectClothing(clothing: Clothing): void {
-    this.selectedClothing = clothing;
+  selectClothing(clothing: any): void {
+    this.clothingService.selectClothing(clothing);
   }
 
   editImage() {
@@ -34,7 +34,15 @@ export class ClothesComponent implements OnInit {
   }
 
   addClothing() {
-    this.selectedClothing = new Clothing();
+    this.clothingService.selectClothing(new Clothing());
+  }
+
+  deleteClothing() {
+    this.clothingService.deleteClothing().then(done => this.selectedClothing = null);
+  }
+
+  clearSelectedClothing() {
+    this.clothingService.cancelAddClothing();
   }
 
 }

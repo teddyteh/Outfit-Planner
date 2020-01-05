@@ -1,32 +1,58 @@
 <div class="card" style="min-width: 350px;">
     <div class="card-header bg-dark d-flex align-items-center justify-content-between">
         <span class="text-white text-uppercase">Your Clothes</span>
-        <i class="fa fa-plus-circle float-right" style="color: #fff;" (click)="addClothing()"></i>
-    </div>
-    <div class="card-body" style="max-height: 500px; overflow-y: scroll;">
 
-        <app-login></app-login>
+        <div>
+            <i class="fa fa-plus-circle" style="color: #fff;" (click)="addClothing()"
+                *ngIf="!clothingService.selectedClothing"></i>
 
-        {{clothes | json}}
-        <div class="card border-0" *ngFor="let clothing of clothingService.clothes | async"
-            (click)="selectClothing(clothing)">
-            <div class="row no-gutters">
-                <div class="d-flex flex-wrap align-items-center">
-                    <img src="{{clothing.photo ? clothing.photo: 'https://via.placeholder.com/100'}}"
-                        style="max-width: 100px;">
-                </div>
-                <div class="pt-1 pl-3">
-                    <h5 class="card-title">{{clothing.name}}</h5>
-                    <p class="card-text"><small class="text-muted text-uppercase">{{clothing.brand}}</small></p>
-                </div>
-            </div>
-
-            <div class="w-100">
-                <hr>
-            </div>
+            <i class="fa fa-trash pr-2" style="color: #fff;" (click)="deleteClothing()"
+                *ngIf="clothingService.selectedClothing && clothingService.selectedClothing.id"></i>
+            <i class="fa fa-times-circle" style="color: #fff;" (click)="clearSelectedClothing()"
+                *ngIf="clothingService.selectedClothing"></i>
         </div>
 
     </div>
 
-    <app-clothing [clothing]="selectedClothing" (editImage)="editImage()"></app-clothing>
+    <app-clothing [clothing]="clothingService.selectedClothing" (cancelEditing)="clearSelectedClothing()"
+        (editImage)="editImage()">
+    </app-clothing>
+
+    <div>
+
+        <ng-template #showLoading>
+            <div class="d-flex justify-content-center pt-3">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
+
+        <div *ngIf="clothingService.clothes | async as clothes; else showLoading">
+
+            <div class="mt-3" style="max-height: 500px; overflow-y: scroll;">
+                <div class="card border-0" *ngFor="let clothing of clothes" (click)="selectClothing(clothing)">
+                    <div class="ml-3 mr-3">
+                        <div class="row no-gutters">
+                            <div class="d-flex flex-wrap align-items-center">
+                                <img src="{{clothing.photo ? clothing.photo: 'https://via.placeholder.com/100'}}"
+                                    style="max-width: 100px;">
+                            </div>
+                            <div class="pt-1 pl-3">
+                                <h5 class="card-title">{{clothing.name}}</h5>
+                                <p class="card-text"><small class="text-muted text-uppercase">{{clothing.brand}}</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <app-login></app-login>
+
+    </div>
 </div>
