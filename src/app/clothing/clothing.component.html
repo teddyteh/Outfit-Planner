@@ -1,6 +1,6 @@
 <div class="m-3" *ngIf="clothing">
 
-    <h2>{{clothing.id ? clothing.name + ' Details' : 'New Clothing' | uppercase}}</h2>
+    <h2>{{clothing.name | uppercase}} Details</h2>
 
     <div class="row no-gutters">
         <div class="d-flex flex-wrap align-items-center">
@@ -27,7 +27,7 @@
     </div>
 
     <button type="button" class="btn btn-dark rounded-0 btn-block mt-3 text-uppercase" (click)="addClothing()"
-        *ngIf="!clothing.id">Add
+        *ngIf="!clothing.user">Add
         Clothing</button>
 
 </div>
