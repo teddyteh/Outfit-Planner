@@ -22,7 +22,11 @@ export class ClothingComponent implements OnInit {
     this.editImage.emit();
   }
 
-  addClothing() {
-    this.clothingService.addClothing(this.clothing);
+  updateClothing() {
+    if (!this.clothing.id)
+      this.clothingService.addClothing(this.clothing);
+    else {
+      this.clothingService.updateClothing(this.clothing);
+    }
   }
 }

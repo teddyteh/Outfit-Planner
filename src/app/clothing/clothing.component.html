@@ -26,8 +26,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-dark rounded-0 btn-block mt-3 text-uppercase" (click)="addClothing()"
-        *ngIf="!clothing.user">Add
-        Clothing</button>
+    <button type="button" class="btn btn-dark rounded-0 btn-block mt-3 text-uppercase"
+        (click)="updateClothing()">{{!clothing.id ? "Add" : "Update"}}</button>
 
 </div>

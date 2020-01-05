@@ -10,10 +10,6 @@ import { Observable, of } from 'rxjs';
 })
 export class ClothesComponent implements OnInit {
 
-  selectedClothing: any;
-  @Input() showImageEditor = false;
-  @Output() showImageEditorChange = new EventEmitter<boolean>();
-
   constructor(private clothingService: ClothingService) {
   }
 
@@ -25,12 +21,7 @@ export class ClothesComponent implements OnInit {
   }
 
   editImage() {
-    this.showImageEditorChange.emit(true);
-  }
-
-  imageUploaded(imgurLink) {
-    this.selectedClothing.photo = imgurLink;
-    this.showImageEditorChange.emit(false);
+    this.clothingService.setShowImageEditor(true);
   }
 
   addClothing() {
@@ -38,7 +29,7 @@ export class ClothesComponent implements OnInit {
   }
 
   deleteClothing() {
-    this.clothingService.deleteClothing().then(done => this.selectedClothing = null);
+    this.clothingService.deleteClothing();
   }
 
   clearSelectedClothing() {
